@@ -32,6 +32,7 @@ public class Group<T> extends Task<T> {
     @Override
     public void apply(T arg, Visitor<T> visitor) {
         this.freeze();
+        visitor.onSignature(this);
         visitor.onGroupStart(this);
         tasks = Collections.unmodifiableList(tasks);
         for (Task<T> task: tasks) {
