@@ -1,11 +1,14 @@
 package org.example.Selery;
 
+import lombok.Getter;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
 public abstract class Task<T> {
     private String id;
+    @Getter
     private Map<String, String> headers;
 
     public abstract void apply(T arg, Visitor<T> visitor);

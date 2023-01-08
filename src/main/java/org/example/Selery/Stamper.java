@@ -8,21 +8,17 @@ import java.util.List;
 
 public class Stamper<T> implements Visitor<T>{
     private static Integer onGroup;
-    private static List<Boolean> inGroup = new ArrayList<>();
+    private final static List<Boolean> inGroup = new ArrayList<>();
     private static Integer ID = 1;
-    private static List<HashMap<String, String>> nested = new ArrayList<>();
-    private static List<String> stack = new ArrayList<String>();
-    private static int counter = 0;
+    private final static List<HashMap<String, String>> nested = new ArrayList<>();
     @Override
     public void onSignature(Task<T> sign) {
         sign.setHeader(sign.getId(), ID.toString());
         if(!inGroup.isEmpty()){
             HashMap<String, String> stack = nested.get(nested.size()-1);
             stack.put(sign.getId(), ID.toString());
-//            stack.add(ID.toString());
             nested.remove(nested.size()-1);
             nested.add(stack);
-            counter ++;
         }
         ID++;
     }
@@ -37,7 +33,6 @@ public class Stamper<T> implements Visitor<T>{
 
     @Override @SneakyThrows
     public void onGroupEnd(Task<T> group) {
-
         ID = onGroup;
         HashMap<String, String> toPut = nested.get(nested.size()-1);
         nested.remove(nested.size()-1);
